@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <title>Billet vendu par etudiant</title>
+</head>
+<body>
+    
+    <div class="flex">
+        <!-- sidebar -->
+        <div th:replace="~{fragments/sidebar.html}"></div>
+
+        <div class="w-full">
+            <div class="title flex justify-center items-center mt-5 mb-6">
+                <h2>Le nombre et le type de billet vendu par étudiant</h2>
+            </div>
+
+            <div class="w-full flex justify-center items-center">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ETU</th>
+                            <th>Nom</th>
+                            <th>Prenom</th>
+                            <th>Type billet</th>
+                            <th>Billet vendu</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr th:each="c : ${contenu}">
+                            <td th:text="${c.idEtudiant}"></td>
+                            <td th:text="${c.nom}"></td>
+                            <td th:text="${c.prenom}"></td>
+                            <td th:text="${c.prix}"></td>
+                            <td th:text="${c.nbBillet}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="flex justify-center items-center mt-2">
+                <div class="p-2 mr-2 border border-slate-300 shadow" th:each="i : ${#numbers.sequence(0, nbPage-1)}" th:classappend="${i == numPage ? 'bg-red-500' : ''}">
+                    <a th:href="@{/pageNbEtTypeBilletVendu(numPage=${i})}" class="text-slate-800 font-normal" th:text="${i+1}"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script th:src="@{/js/script.js}"></script>
+
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <title>Insertion vente de billet</title>
+</head>
+<body>
+    
+    <div class="flex">
+        <!-- sidebar -->
+        <div th:replace="~{fragments/sidebar.html}"></div>
+
+        <div class="w-full">
+            <div class="flex justify-center items-center mt-5 mb-6">
+                <h2>Insertion vente des billets</h2>
+            </div>
+
+            <div class="w-full flex justify-center items-center"> 
+                <div class="form-card">
+                    <form th:action="@{/insertBilletEtudiantVendu}" method="post">
+                        <div class="input-field">
+                            <label for="idEtudiant" class="label">Etudiant</label>
+                            <input type="text" class="input" name="idEtudiant" id="idEtudiant">
+                        </div>
+    
+                        <div class="input-field">
+                            <label for="idBillet" class="label">Type billet</label>
+                            <select name="idBillet" id="idBillet" class="input">
+                                <option th:each="billet : ${allBillet}" th:value="${billet.id}" th:text="${billet.prix}"></option>
+                            </select>
+                        </div>
+    
+                        <div class="input-field">
+                            <label for="nbBillet" class="label">Nombre vendu</label>
+                            <input type="number" class="input" name="nbBillet" id="nbBillet">
+                        </div>
+    
+                        <div class="button flex justify-end">
+                            <button class="btn">Valider</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script th:src="@{/js/script.js}"></script>
+
+</body>
+</html>

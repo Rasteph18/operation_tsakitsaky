@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <title>Accueil</title>
+</head>
+<body>
+    <div class="flex">
+        <!-- sidebar -->
+        <div th:replace="~{fragments/sidebar.html}"></div>
+
+        <div class="w-full flex justify-center items-center">
+            <h1>Operation tsakitsaky :)</h1>
+        </div>
+    </div>
+
+    <script th:src="@{/js/script.js}"></script>
+</body>
+</html>
