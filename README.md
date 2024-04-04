@@ -2,7 +2,7 @@
 
 ---
 
-**Ce projet est développé avec Spring Boot MVC et utilise Tailwind CSS pour le style.**
+**Ce projet est développé avec Spring Boot MVC en utilisant Postgresql pour les données et Tailwind CSS pour le style.**
 
 ---
 

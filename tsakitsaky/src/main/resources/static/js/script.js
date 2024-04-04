@@ -13,3 +13,23 @@ document.querySelectorAll('.sidebar-dropdown-toggle').forEach(function(item) {
         }
     })
 })
+
+
+
+// Récupère le paramètre de l'URL après la redirection
+const urlParams = new URLSearchParams(window.location.search);
+const authError = urlParams.get('error');
+const authSuccess = urlParams.get('success');
+
+// Si le paramètre 'error' est présent et a la valeur 'true', affiche le toast
+if (authError === 'true' || authSuccess === 'true') {
+    showToast();
+}
+
+function showToast() {
+    var toast = document.getElementById("toast");
+    toast.classList.remove("hidden");
+    setTimeout(function() {
+        toast.classList.add("hidden");
+    }, 3000);
+}

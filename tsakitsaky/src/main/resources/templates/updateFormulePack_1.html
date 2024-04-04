@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <title>Modification Pack</title>
+</head>
+<body>
+
+    <div class="flex">
+        <!-- sidebar -->
+        <div th:replace="~{fragments/sidebar.html}"></div>
+
+        <div class="min-h-screen w-full">
+            <div id="toast" class="hidden absolute top-4 right-5 rounded-md bg-green-200 text-green-800 py-2 px-5 max-w-md" th:text="${message}"></div> 
+            <div class="title flex justify-center items-center mt-5 mb-6">
+                <h2>Modification pack</h2>
+            </div>
+
+            <div class="w-full flex justify-center items-center">
+                <div class="form-card">
+                    <form th:action="@{/updatePack}" method="post">
+                        <input type="hidden" th:value="${pack.id}" name="id">
+                        <div class="input-field">
+                            <label for="nom" class="label">Nom</label>
+                            <input type="text" class="input" name="nom" id="nom" th:value="${pack.nom}" th:text="${pack.nom}">
+                        </div>
+
+                        <div class="input-field">
+                            <label for="idBillet" class="label">Montant</label>
+                            <select name="idBillet" id="idBillet" class="input">
+                                <option th:each="billet : ${allBillet}" th:value="${billet.id}" th:text="${billet.prix}" th:selected="${billet.id == pack.idBillet}"></option>
+                            </select>
+                        </div>
+
+                        <div class="input-field">
+                            <label for="photo" class="label">Photo</label>
+                            <input type="file" accept="image/*" class="" name="photo" id="photo">
+                        </div>
+
+                        <div class="button flex justify-end">
+                            <button class="btn">Suivant</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    
+    <script th:src="@{/js/script.js}"></script>
+
+</body>
+</html>

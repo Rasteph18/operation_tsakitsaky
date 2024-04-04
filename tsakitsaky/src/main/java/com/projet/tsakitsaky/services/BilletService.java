@@ -27,6 +27,11 @@ public class BilletService {
         return billetRepository.findAll();
     }
 
+    public Billet getBilletById(int id)
+    {
+        return billetRepository.findById(id).get();
+    }
+
     //Le nombre et le type de billet vendu par étudiant
     public Page<VNbTypeBilletVendu> nbEtTypeBilletVendu(int numPage, int size)
     {

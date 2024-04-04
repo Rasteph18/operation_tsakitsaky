@@ -4,48 +4,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" th:href="@{/css/style.css}">
-    <title>Insertion vente de billet</title>
+    <title>Insertion Pack</title>
 </head>
 <body>
-    
+
     <div class="flex">
         <!-- sidebar -->
         <div th:replace="~{fragments/sidebar.html}"></div>
 
         <div class="min-h-screen w-full">
-            <div class="flex justify-center items-center mt-5 mb-6">
-                <h2>Insertion vente des billets</h2>
+            <div id="toast" class="hidden absolute top-4 right-5 rounded-md bg-green-200 text-green-800 py-2 px-5 max-w-md" th:text="${message}"></div> 
+            <div class="title flex justify-center items-center mt-5 mb-6">
+                <h2>Insertion pack</h2>
             </div>
 
-            <div class="w-full flex justify-center items-center"> 
+            <div class="w-full flex justify-center items-center">
                 <div class="form-card">
-                    <form th:action="@{/insertBilletEtudiantVendu}" method="post">
+                    <form th:action="@{/insertionPack}" method="post">
                         <div class="input-field">
-                            <label for="idEtudiant" class="label">Etudiant</label>
-                            <input type="text" class="input" name="idEtudiant" id="idEtudiant">
+                            <label for="nom" class="label">Nom</label>
+                            <input type="text" class="input" name="nom" id="nom">
                         </div>
-    
+
                         <div class="input-field">
-                            <label for="idBillet" class="label">Type billet</label>
+                            <label for="idBillet" class="label">Montant</label>
                             <select name="idBillet" id="idBillet" class="input">
                                 <option th:each="billet : ${allBillet}" th:value="${billet.id}" th:text="${billet.prix}"></option>
                             </select>
                         </div>
-    
+
                         <div class="input-field">
-                            <label for="nbBillet" class="label">Nombre vendu</label>
-                            <input type="number" class="input" name="nbBillet" id="nbBillet">
+                            <label for="photo" class="label">Photo</label>
+                            <input type="file" accept="image/*" class="" name="photo" id="photo">
                         </div>
-    
+
                         <div class="button flex justify-end">
-                            <button class="btn">Valider</button>
+                            <button class="btn">Suivant</button>
                         </div>
                     </form>
                 </div>
             </div>
+            
         </div>
     </div>
-
+    
     <script th:src="@{/js/script.js}"></script>
 
 </body>
