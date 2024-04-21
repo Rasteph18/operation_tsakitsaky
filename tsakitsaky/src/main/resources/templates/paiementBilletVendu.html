@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <title>Paiement des billets</title>
+</head>
+<body>
+    <div class="flex">
+        <!-- sidebar -->
+        <div th:replace="~{fragments/sidebar.html}"></div>
+
+        <div class="min-h-screen w-full container">
+            <div id="toast" class="hidden absolute top-4 right-5 rounded-md bg-orange-200 text-orange-800 py-2 px-5 max-w-md" th:text="${message}"></div> 
+            <div class="title flex justify-center items-center mt-5 mb-6">
+                <h2>Paiement des billets</h2>
+            </div>
+
+            <div class="w-full flex justify-center items-center mt-5 mb-6">
+                <form th:action="@{/pagePaiementBilletVendu}" method="get" class="flex space-y-0">
+                    <div class="input-field">
+                        <input type="text" name="idEtudiant" class="w-36 border-2 rounded-lg bg-slate-50 p-2 focus:border-teal-600 outline-none" placeholder="Etudiant">
+                    </div>
+
+                    <div class="button ml-2">
+                        <button class="btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                            </svg>                                  
+                        </button>
+                    </div>
+                </form>
+            </div>
+            
+
+            <div class="flex justify-center items-center">
+                <div class="form-card">
+                    <div class="details space-y-6 mb-5" th:if="${etudiant != null}">
+                        <h4 th:text="${etudiant.nom} + ' ' + ${etudiant.prenom}"></h4>
+                        <p>Montant a payer <span th:text="${montantAPayer}" class="text-lg font-medium"></span> Ar</p>
+                    </div>
+                    <form th:action="@{/insertPaiementVendu}" method="post">
+                        <div class="" th:if="${etudiant != null}">
+                            <input type="hidden" name="idEtudiant" th:value="${etudiant.id}">
+                        </div>
+                        <div class="input-field">
+                            <label for="montant" class="label">Payer</label>
+                            <input type="text" name="montant" id="montant" class="input">
+                        </div>
+
+                        <div class="button flex justify-center">
+                            <button class="btn">Valider</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script th:src="@{/js/script.js}"></script>
+
+</body>
+</html>

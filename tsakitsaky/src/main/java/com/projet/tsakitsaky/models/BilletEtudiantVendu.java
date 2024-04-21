@@ -15,19 +15,26 @@ public class BilletEtudiantVendu {
     private int id;
     private int idBillet;
     private String idEtudiant;
+    private String nomClient;
+    private String contact;
     private double nbBillet;
+    private int idAxe;
+
 
     public BilletEtudiantVendu()
     {
 
     }
 
-    public BilletEtudiantVendu(int id, int idBillet, String idEtudiant, double nbBillet)
+    public BilletEtudiantVendu(int id, int idBillet, String idEtudiant, String nomClient, String contact, double nbBillet, int idAxe)
     {
         setId(id);
         setIdBillet(idBillet);
         setIdEtudiant(idEtudiant);
+        setNomClient(nomClient);
+        setContact(contact);
         setNbBillet(nbBillet);
+        setIdAxe(idAxe);
     }
 
     public int getId() {
@@ -53,5 +60,23 @@ public class BilletEtudiantVendu {
     }
     public void setNbBillet(double nbBillet) {
         this.nbBillet = nbBillet;
+    }
+    public String getNomClient() {
+        return nomClient;
+    }
+    public void setNomClient(String nomClient) {
+        this.nomClient = nomClient;
+    }
+    public String getContact() {
+        return contact;
+    }
+    public void setContact(String contact) {
+        this.contact = contact;
+    }
+    public int getIdAxe() {
+        return idAxe;
+    }
+    public void setIdAxe(int idAxe) {
+        this.idAxe = idAxe;
     }
 }

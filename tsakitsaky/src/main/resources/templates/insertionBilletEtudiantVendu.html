@@ -12,7 +12,7 @@
         <!-- sidebar -->
         <div th:replace="~{fragments/sidebar.html}"></div>
 
-        <div class="min-h-screen w-full">
+        <div class="min-h-screen w-full p-3">
             <div class="flex justify-center items-center mt-5 mb-6">
                 <h2>Insertion vente des billets</h2>
             </div>
@@ -23,6 +23,23 @@
                         <div class="input-field">
                             <label for="idEtudiant" class="label">Etudiant</label>
                             <input type="text" class="input" name="idEtudiant" id="idEtudiant">
+                        </div>
+
+                        <div class="input-field">
+                            <label for="nomClient" class="label">Nom du client</label>
+                            <input type="text" class="input" name="nomClient" id="nomClient">
+                        </div>
+
+                        <div class="input-field">
+                            <label for="contact" class="label">Contact</label>
+                            <input type="text" class="input" name="contact" id="contact">
+                        </div>
+
+                        <div class="input-field">
+                            <label for="idAxe" class="label">Axe</label>
+                            <select name="idAxe" id="idAxe" class="input">
+                                <option th:each="axe : ${allAxe}" th:value="${axe.id}" th:text="${axe.nom}"></option>
+                            </select>
                         </div>
     
                         <div class="input-field">

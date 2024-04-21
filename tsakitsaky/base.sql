@@ -21,14 +21,31 @@ CREATE TABLE etudiant(
     sexe VARCHAR(50)
 );
 
+CREATE TABLE axe(
+    id SERIAL PRIMARY KEY,
+    nom VARCHAR(150)
+);
+
+CREATE TABLE details_axe(
+    id SERIAL PRIMARY KEY,
+    id_axe INT,
+    lieu VARCHAR(250),
+
+    FOREIGN KEY(id_axe) REFERENCES axe(id)
+);
+
 CREATE TABLE billet_etudiant_vendu(
     id SERIAL PRIMARY KEY,
     id_billet INT,
     id_etudiant VARCHAR(50),
+    nom_client VARCHAR(250),
+    contact VARCHAR(150),
     nb_billet DOUBLE PRECISION,
+    id_axe INT,
 
     FOREIGN KEY(id_billet) REFERENCES billet(id),
-    FOREIGN KEY(id_etudiant) REFERENCES etudiant(id)
+    FOREIGN KEY(id_etudiant) REFERENCES etudiant(id),
+    FOREIGN KEY(id_axe) REFERENCES axe(id)
 );
 
 CREATE TABLE produit(
@@ -66,6 +83,15 @@ CREATE TABLE details_pack(
 );
 
 
+CREATE TABLE paiement_billet(
+    id SERIAL PRIMARY KEY,
+    id_etudiant VARCHAR(50),
+    etat_paiement INT, -- total:10 ||  partiel:20
+    montant DOUBLE PRECISION,
+
+    FOREIGN KEY(id_etudiant) REFERENCES etudiant(id)
+);
+
 
 CREATE SEQUENCE etudiant_seq START 1 INCREMENT 1;
 
@@ -78,22 +104,60 @@ SELECT
     e.nom, 
     e.prenom, 
     b.prix, 
-    COALESCE(bev.nb_billet, 0) AS nb_billet
+    SUM(COALESCE(bev.nb_billet, 0)) AS nb_billet
 FROM 
     etudiant e
 CROSS JOIN 
     billet b
 LEFT JOIN 
-    billet_etudiant_vendu bev ON bev.id_etudiant = e.id AND bev.id_billet = b.id;
+    billet_etudiant_vendu bev ON bev.id_etudiant = e.id AND bev.id_billet = b.id
+GROUP BY
+    e.id, b.id, e.nom, e.prenom, b.prix;
+
+
+
+SELECT 
+    ROW_NUMBER() OVER (ORDER BY e.id, b.id) AS id,
+    e.nom,
+    e.prenom,
+    bev.nom_client,
+    bev.contact,
+    a.nom,
+    SUM(bev.nb_billet) AS nb_billet,
+    b.prix,
+    SUM(bev.nb_billet * b.prix) AS montant
+FROM 
+    billet_etudiant_vendu bev
+JOIN
+    etudiant e ON e.id = bev.id_etudiant
+JOIN 
+    billet b ON b.id = bev.id_billet
+JOIN 
+    axe a ON a.id = bev.id_axe
+GROUP BY
+    e.id, b.id, e.nom, bev.nom_client, bev.contact, a.nom, b.prix;
 
 
 
 --donnee
-INSERT INTO utilisateur VALUES(default, 'steph@gmail.com', md5('1234'), 1);
+INSERT INTO utilisateur VALUES(default, 'steph@gmail.com', md5('1234'), 1); --admin:1 || normal:0
 INSERT INTO utilisateur VALUES(default, 'rabe@gmail.com', md5('1234'), 0);
 
 INSERT INTO billet VALUES(default, 20000);
 INSERT INTO billet VALUES(default, 30000);
+
+INSERT INTO axe VALUES(default, 'Axe1');
+INSERT INTO axe VALUES(default, 'Axe2');
+
+INSERT INTO details_axe VALUES(default, 1, 'Tanjombato');
+INSERT INTO details_axe VALUES(default, 1, 'Andoharanofotsy');
+INSERT INTO details_axe VALUES(default, 1, 'Iavoloha');
+INSERT INTO details_axe VALUES(default, 2, 'Anosy');
+INSERT INTO details_axe VALUES(default, 2, 'Analakely');
+INSERT INTO details_axe VALUES(default, 2, 'Ambohijatovo'); 
+
+
+
 
 INSERT INTO etudiant VALUES('ETU0' || NEXTVAL('etudiant_seq'), 'RANDRIA', 'Lita', 'Homme');
 INSERT INTO etudiant VALUES('ETU0' || NEXTVAL('etudiant_seq'), 'RAKOTOBE', 'Jean', 'Homme');
